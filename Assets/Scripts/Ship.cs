@@ -6,6 +6,7 @@ public class Ship : MonoBehaviour
 {
     private const double ShotInterval = 2;
     private Timer ShotTimer;
+    public GameObject LaserPrefab;
 
     private void Start()
     {
@@ -24,6 +25,7 @@ public class Ship : MonoBehaviour
 
     public void FireShot() 
     {
-        Debug.Log("Fired a laser!");
+        //Debug.Log("Fired a laser!");
+        Instantiate(LaserPrefab, transform.position, Quaternion.identity);
     }
 }
