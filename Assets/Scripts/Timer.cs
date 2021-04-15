@@ -2,39 +2,40 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Timer : MonoBehaviour
+public class Timer 
 {
-    private double interval, elapsedTime;
-    private bool timerUp, isActive;
+    private double Interval, ElapsedTime;
+    private bool TimerUp, IsActive;
 
     public Timer(double interval) 
     {
-        this.interval = interval;
+        Interval = interval;
     }
 
-    private void Update()
+    public void IncrementTime(double delta)
     {
-        if (isActive)
+        if (IsActive)
         {
-            elapsedTime += Time.deltaTime;
-            if (elapsedTime >= interval) 
+            ElapsedTime += delta;
+            if (ElapsedTime >= Interval) 
             {
-                timerUp = true;
+                TimerUp = true;
             }
         }
     }
 
     public void Start() 
     {
-        elapsedTime = 0;
-        timerUp = false;
+        ElapsedTime = 0;
+        TimerUp = false;
+        IsActive = true;
     }
 
     public bool TimerFinished() 
     {
-        if (timerUp) 
+        if (TimerUp) 
         {
-            timerUp = false;
+            TimerUp = false;
             Start(); // restart the timer
             return true;
         } 

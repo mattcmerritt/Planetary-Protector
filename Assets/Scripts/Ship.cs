@@ -4,16 +4,26 @@ using UnityEngine;
 
 public class Ship : MonoBehaviour
 {
+    private const double ShotInterval = 2;
+    private Timer ShotTimer;
+
     private void Start()
     {
-        // create and start a timer
-        // get a first position to go to
+        ShotTimer = new Timer(ShotInterval); // fires a shot every INTERVAL
+        ShotTimer.Start();
     }
 
     private void Update()
     {
-        // go to new position
-        // rotate to new position
-        // fire if timer countdown is up
+        ShotTimer.IncrementTime(Time.deltaTime);
+        if (ShotTimer.TimerFinished())
+        {
+            FireShot();
+        }
+    }
+
+    public void FireShot() 
+    {
+        Debug.Log("Fired a laser!");
     }
 }
