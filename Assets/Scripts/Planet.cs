@@ -110,7 +110,7 @@ public class Planet : MonoBehaviour
         else
         {
             Destroy(gameObject);
-            Debug.Log("A planet could not find a suitable place to load and has been skipped.");
+            Debug.LogError("A planet could not find a suitable place to load and has been skipped.");
         }
     }
 
