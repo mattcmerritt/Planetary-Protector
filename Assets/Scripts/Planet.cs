@@ -7,27 +7,31 @@ public class Planet : MonoBehaviour
     public float DistanceFromShip;
     private float XDisplacement, YDisplacement;
     private Rigidbody2D PlanetRigidbody;
+    private Animator PlanetAnimator;
     private int SetLocationPasses, PlacementPriority;
     private const int MaxPasses = 30;
 
     private void Start()
     {
+        PlanetAnimator = GetComponent<Animator>();
         SetLocationPasses = 0;
         PickStartLocationRandomly();
     }
 
     private void Update()
     {
-        
+        if (PlanetAnimator.GetCurrentAnimatorStateInfo(0).IsName("PlanetDestroyed"))
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (!collision.gameObject.CompareTag("Planet"))
         {
-            Destroy(gameObject);
-            // do some fancy explosion stuff later
-            // lose the game
+            PlanetAnimator.SetBool("PlanetHit", true);
+            Debug.Log("Game Over: A planet was destroyed by your laser.");
         }
         if (collision.gameObject.CompareTag("Planet"))
         {
