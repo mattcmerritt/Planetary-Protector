@@ -13,6 +13,7 @@ public class Planet : MonoBehaviour
 
     private void Start()
     {
+        //PlanetRigidbody = GetComponent<Rigidbody2D>();
         PlanetAnimator = GetComponent<Animator>();
         SetLocationPasses = 0;
         PickStartLocationRandomly();
