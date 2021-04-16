@@ -7,7 +7,7 @@ public class Planet : MonoBehaviour
     public float DistanceFromShip;
     private float XDisplacement, YDisplacement;
     private Rigidbody2D PlanetRigidbody;
-    public int SetLocationPasses, PlacementPriority;
+    private int SetLocationPasses, PlacementPriority;
     private const int MaxPasses = 30;
 
     private void Start()
@@ -29,7 +29,7 @@ public class Planet : MonoBehaviour
             // do some fancy explosion stuff later
             // lose the game
         }
-        if(collision.gameObject.CompareTag("Planet"))
+        if (collision.gameObject.CompareTag("Planet"))
         {
             RelocateOnePlanet(collision.gameObject);
         }
@@ -44,6 +44,46 @@ public class Planet : MonoBehaviour
         }
     }
 
+    // if the planet spawned on another planet, move the lower priority planet clockwise a bit
+    public void PickStartLocationUsingPrevious()
+    {
+        // why does this line need to be here now?
+        PlanetRigidbody = GetComponent<Rigidbody2D>();
+        if (SetLocationPasses < MaxPasses)
+        {
+            // in terms of a clock, this handles 9 inclusive to 3 exclusive
+            if (YDisplacement > 0 || XDisplacement == -DistanceFromShip)
+            {
+                XDisplacement += Random.Range(0.2f, 0.5f);
+                // keep bound to radius
+                if(XDisplacement > DistanceFromShip)
+                {
+                    XDisplacement = DistanceFromShip;
+                }
+                YDisplacement = Mathf.Sqrt(Mathf.Pow(DistanceFromShip, 2) - Mathf.Pow(XDisplacement, 2));
+            }
+            // in terms of a clock, this handles 3 inclusive to 9 exclusive
+            else
+            {
+                XDisplacement -= Random.Range(0.2f, 1f);
+                // keep bound to radius
+                if (XDisplacement < -DistanceFromShip)
+                {
+                    XDisplacement = -DistanceFromShip;
+                }
+                YDisplacement = -Mathf.Sqrt(Mathf.Pow(DistanceFromShip, 2) - Mathf.Pow(XDisplacement, 2));
+            }
+            PlanetRigidbody.MovePosition(new Vector2(XDisplacement, YDisplacement));
+            SetLocationPasses++;
+        }
+        else
+        {
+            Destroy(gameObject);
+            Debug.Log("A planet could not find a suitable place to load and has been skipped.");
+        }
+    }
+
+    // if the planet spawned on another planet, move the lower priority planet to a new random location
     public void PickStartLocationRandomly()
     {
         // why does this line need to be here now?
@@ -86,6 +126,7 @@ public class Planet : MonoBehaviour
         if(this.GetPlacementPriority() > otherPlanet.GetComponent<Planet>().GetPlacementPriority())
         {
             this.PickStartLocationRandomly();
+            //this.PickStartLocationUsingPrevious();
         }
         // else do nothing, because the priority states that the other planet is the one that should move
     }
