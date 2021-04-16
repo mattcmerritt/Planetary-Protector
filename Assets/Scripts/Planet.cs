@@ -7,13 +7,13 @@ public class Planet : MonoBehaviour
     public float DistanceFromShip;
     private float XDisplacement, YDisplacement;
     private Rigidbody2D PlanetRigidbody;
-    private int SetLocationPasses;
+    public int SetLocationPasses, PlacementPriority;
     private const int MaxPasses = 30;
 
     private void Start()
     {
         SetLocationPasses = 0;
-        PickStartLocation();
+        PickStartLocationRandomly();
     }
 
     private void Update()
@@ -31,7 +31,7 @@ public class Planet : MonoBehaviour
         }
         if(collision.gameObject.CompareTag("Planet"))
         {
-            this.PickStartLocation();
+            RelocateOnePlanet(collision.gameObject);
         }
     }
 
@@ -40,11 +40,11 @@ public class Planet : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Planet"))
         {
-            this.PickStartLocation();
+            RelocateOnePlanet(collision.gameObject);
         }
     }
 
-    public void PickStartLocation()
+    public void PickStartLocationRandomly()
     {
         // why does this line need to be here now?
         PlanetRigidbody = GetComponent<Rigidbody2D>();
@@ -67,5 +67,26 @@ public class Planet : MonoBehaviour
             Destroy(gameObject);
             Debug.Log("A planet could not find a suitable place to load and has been skipped.");
         }
+    }
+
+    // this priority is supposed to determine which planet moves to minimize operations
+    // on a two-planet collision during spawning, only the planet with the higher priority will relocate
+    public void SetPlacementPriority(int priority)
+    {
+        PlacementPriority = priority;
+    }
+
+    public int GetPlacementPriority()
+    {
+        return PlacementPriority;
+    }
+
+    public void RelocateOnePlanet(GameObject otherPlanet)
+    {
+        if(this.GetPlacementPriority() > otherPlanet.GetComponent<Planet>().GetPlacementPriority())
+        {
+            this.PickStartLocationRandomly();
+        }
+        // else do nothing, because the priority states that the other planet is the one that should move
     }
 }

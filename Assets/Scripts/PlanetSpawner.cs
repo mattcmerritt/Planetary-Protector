@@ -11,7 +11,8 @@ public class PlanetSpawner : MonoBehaviour
     {
         for (int i = 0; i < NumPlanets; i++)
         {
-            Instantiate(PlanetPrefab, Vector3.zero, Quaternion.identity);
+            GameObject NewPlanet = Instantiate(PlanetPrefab, Vector3.zero, Quaternion.identity);
+            NewPlanet.GetComponent<Planet>().SetPlacementPriority(i);
         }
     }
 }
