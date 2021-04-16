@@ -5,12 +5,14 @@ using UnityEngine;
 public class PlanetSpawner : MonoBehaviour
 {
     public GameObject PlanetPrefab;
+    public int NumPlanets;
 
     private void Start()
     {
-        for (int i = 0; i < 100; i++)
+        for (int i = 0; i < NumPlanets; i++)
         {
-            Instantiate(PlanetPrefab, Vector3.zero, Quaternion.identity);
+            GameObject NewPlanet = Instantiate(PlanetPrefab, Vector3.zero, Quaternion.identity);
+            NewPlanet.GetComponent<Planet>().SetPlacementPriority(i);
         }
     }
 }

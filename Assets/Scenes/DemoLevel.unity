@@ -345,3 +345,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlanetPrefab: {fileID: 556810737303903530, guid: e6f8b1a7146d1944391b7803f7621436,
     type: 3}
+  NumPlanets: 10
