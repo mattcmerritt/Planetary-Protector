@@ -27,13 +27,17 @@ public class Planet : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (!collision.gameObject.CompareTag("Planet"))
         {
             PlanetAnimator.SetBool("PlanetHit", true);
             Debug.Log("Game Over: A planet was destroyed by your laser.");
         }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
         if (collision.gameObject.CompareTag("Planet"))
         {
             RelocateOnePlanet(collision.gameObject);
