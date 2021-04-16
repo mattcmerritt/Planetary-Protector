@@ -21,11 +21,21 @@ public class Ship : MonoBehaviour
         {
             FireShot();
         }
+        FaceCursor();
     }
 
     public void FireShot() 
     {
-        //Debug.Log("Fired a laser!");
-        Instantiate(LaserPrefab, transform.position, Quaternion.identity);
+        GameObject laser = Instantiate(LaserPrefab, transform.position, Quaternion.identity);
+        laser.transform.eulerAngles = transform.eulerAngles;
+    }
+
+    public void FaceCursor() 
+    {
+        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+        float theta = 360 - Mathf.Atan2(mousePosition.x - transform.position.x, mousePosition.y - transform.position.y) * 180 / Mathf.PI;
+        theta = (theta + 360) % 360;
+        transform.eulerAngles = new Vector3(0f, 0f, theta);
     }
 }

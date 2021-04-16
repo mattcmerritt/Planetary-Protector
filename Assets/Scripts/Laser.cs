@@ -5,7 +5,7 @@ using UnityEngine;
 public class Laser : MonoBehaviour
 {
     private Timer DurationTimer;
-    private const double Duration = 1;
+    private const double Duration = 0.1;
     
     private void Start() 
     {
