@@ -6,8 +6,9 @@ public class Planet : MonoBehaviour
 {
     public float DistanceFromShip;
     private float XDisplacement, YDisplacement;
-    public Rigidbody2D PlanetRigidbody;
+    private Rigidbody2D PlanetRigidbody;
     private int SetLocationPasses;
+    private const int MaxPasses = 30;
 
     private void Start()
     {
@@ -34,11 +35,20 @@ public class Planet : MonoBehaviour
         }
     }
 
+    // if planets managed to get placed on top of one another twice in a row, they wouldn't reposition again without this
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Planet"))
+        {
+            this.PickStartLocation();
+        }
+    }
+
     public void PickStartLocation()
     {
         // why does this line need to be here now?
         PlanetRigidbody = GetComponent<Rigidbody2D>();
-        if (SetLocationPasses < 3)
+        if (SetLocationPasses < MaxPasses)
         {
             XDisplacement = Random.Range(-DistanceFromShip, DistanceFromShip);
             if (Random.Range(-1f, 1f) > 0)
