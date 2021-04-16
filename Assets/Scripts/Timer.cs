@@ -35,7 +35,6 @@ public class Timer
     {
         if (TimerUp) 
         {
-            TimerUp = false;
             Start(); // restart the timer
             return true;
         } 
