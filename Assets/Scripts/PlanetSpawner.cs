@@ -8,7 +8,7 @@ public class PlanetSpawner : MonoBehaviour
 
     private void Start()
     {
-        for (int i = 0; i < 100; i++)
+        for (int i = 0; i < 3; i++)
         {
             Instantiate(PlanetPrefab, Vector3.zero, Quaternion.identity);
         }
