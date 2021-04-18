@@ -5,26 +5,26 @@ using UnityEngine;
 public class Planet : MonoBehaviour
 {
     public float DistanceFromShip;
-    private float XDisplacement, YDisplacement;
+    private float XDisplacement, YDisplacement, PlacementAngle;
     private Rigidbody2D PlanetRigidbody;
     private Animator PlanetAnimator;
     private int SetLocationPasses, PlacementPriority;
     private const int MaxPasses = 30;
 
+    private void Awake()
+    {
+        PlanetRigidbody = GetComponent<Rigidbody2D>();
+    }
+
     private void Start()
     {
-        //PlanetRigidbody = GetComponent<Rigidbody2D>();
         PlanetAnimator = GetComponent<Animator>();
         SetLocationPasses = 0;
-        PickStartLocationRandomly();
     }
 
     private void Update()
     {
-        if (PlanetAnimator.GetCurrentAnimatorStateInfo(0).IsName("PlanetDestroyed"))
-        {
-            Destroy(gameObject);
-        }
+        // nothing so far
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -56,8 +56,6 @@ public class Planet : MonoBehaviour
     // if the planet spawned on another planet, move the lower priority planet clockwise a bit
     public void PickStartLocationUsingPrevious()
     {
-        // why does this line need to be here now?
-        PlanetRigidbody = GetComponent<Rigidbody2D>();
         if (SetLocationPasses < MaxPasses)
         {
             // in terms of a clock, this handles 9 inclusive to 3 exclusive
@@ -95,8 +93,6 @@ public class Planet : MonoBehaviour
     // if the planet spawned on another planet, move the lower priority planet to a new random location
     public void PickStartLocationRandomly()
     {
-        // why does this line need to be here now?
-        PlanetRigidbody = GetComponent<Rigidbody2D>();
         if (SetLocationPasses < MaxPasses)
         {
             XDisplacement = Random.Range(-DistanceFromShip, DistanceFromShip);
@@ -138,5 +134,20 @@ public class Planet : MonoBehaviour
             //this.PickStartLocationUsingPrevious();
         }
         // else do nothing, because the priority states that the other planet is the one that should move
+    }
+
+    // code based off of sample from Professor Blake
+    public void SetPositionWithAngle(float angle)
+    {
+        PlacementAngle = angle;
+        XDisplacement = 3.5f * Mathf.Cos(PlacementAngle);
+        YDisplacement = 3.5f * Mathf.Sin(PlacementAngle);
+        PlanetRigidbody.MovePosition(new Vector2(XDisplacement, YDisplacement));
+    }
+
+    // called when the destruction animation is over
+    public void DestroyPlanet()
+    {
+        Destroy(gameObject);
     }
 }
