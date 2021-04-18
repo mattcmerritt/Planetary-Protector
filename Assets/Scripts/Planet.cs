@@ -20,7 +20,6 @@ public class Planet : MonoBehaviour
     {
         PlanetAnimator = GetComponent<Animator>();
         SetLocationPasses = 0;
-        PickStartLocationRandomly();
     }
 
     private void Update()
@@ -138,5 +137,13 @@ public class Planet : MonoBehaviour
             //this.PickStartLocationUsingPrevious();
         }
         // else do nothing, because the priority states that the other planet is the one that should move
+    }
+
+    public void SetPositionWithAngle(float angle)
+    {
+        PlacementAngle = angle;
+        XDisplacement = 3.5f * Mathf.Cos(PlacementAngle);
+        YDisplacement = 3.5f * Mathf.Sin(PlacementAngle);
+        PlanetRigidbody.MovePosition(new Vector2(XDisplacement, YDisplacement));
     }
 }
