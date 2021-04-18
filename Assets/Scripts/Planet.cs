@@ -5,15 +5,19 @@ using UnityEngine;
 public class Planet : MonoBehaviour
 {
     public float DistanceFromShip;
-    private float XDisplacement, YDisplacement;
+    private float XDisplacement, YDisplacement, PlacementAngle;
     private Rigidbody2D PlanetRigidbody;
     private Animator PlanetAnimator;
     private int SetLocationPasses, PlacementPriority;
     private const int MaxPasses = 30;
 
+    private void Awake()
+    {
+        PlanetRigidbody = GetComponent<Rigidbody2D>();
+    }
+
     private void Start()
     {
-        //PlanetRigidbody = GetComponent<Rigidbody2D>();
         PlanetAnimator = GetComponent<Animator>();
         SetLocationPasses = 0;
         PickStartLocationRandomly();
@@ -56,8 +60,6 @@ public class Planet : MonoBehaviour
     // if the planet spawned on another planet, move the lower priority planet clockwise a bit
     public void PickStartLocationUsingPrevious()
     {
-        // why does this line need to be here now?
-        PlanetRigidbody = GetComponent<Rigidbody2D>();
         if (SetLocationPasses < MaxPasses)
         {
             // in terms of a clock, this handles 9 inclusive to 3 exclusive
@@ -95,8 +97,6 @@ public class Planet : MonoBehaviour
     // if the planet spawned on another planet, move the lower priority planet to a new random location
     public void PickStartLocationRandomly()
     {
-        // why does this line need to be here now?
-        PlanetRigidbody = GetComponent<Rigidbody2D>();
         if (SetLocationPasses < MaxPasses)
         {
             XDisplacement = Random.Range(-DistanceFromShip, DistanceFromShip);
