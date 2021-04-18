@@ -24,10 +24,7 @@ public class Planet : MonoBehaviour
 
     private void Update()
     {
-        if (PlanetAnimator.GetCurrentAnimatorStateInfo(0).IsName("PlanetDestroyed"))
-        {
-            Destroy(gameObject);
-        }
+        // nothing so far
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -145,5 +142,11 @@ public class Planet : MonoBehaviour
         XDisplacement = 3.5f * Mathf.Cos(PlacementAngle);
         YDisplacement = 3.5f * Mathf.Sin(PlacementAngle);
         PlanetRigidbody.MovePosition(new Vector2(XDisplacement, YDisplacement));
+    }
+
+    // called when the destruction animation is over
+    public void DestroyPlanet()
+    {
+        Destroy(gameObject);
     }
 }
