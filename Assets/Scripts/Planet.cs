@@ -136,6 +136,7 @@ public class Planet : MonoBehaviour
         // else do nothing, because the priority states that the other planet is the one that should move
     }
 
+    // code based off of sample from Professor Blake
     public void SetPositionWithAngle(float angle)
     {
         PlacementAngle = angle;
