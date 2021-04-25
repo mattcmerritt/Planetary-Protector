@@ -18,7 +18,9 @@ public class Ship : MonoBehaviour
     private int StartCountdown;
     private TMP_Text CountdownLabel;
     private AudioSource Countdown1, Countdown2;
-    
+
+    // game state
+    private bool IsAlive;    
 
     private void Start()
     {
@@ -29,57 +31,68 @@ public class Ship : MonoBehaviour
         StartTimer = new Timer(1);
         HasStarted = false;
         StartCountdown = 3;
+
+        // initial game state
+        IsAlive = true;
     }
 
     private void Update()
     {
-        if (!HasStarted) {
-            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Vector2 distanceToMouse = transform.position - mousePosition;
-
-            if (distanceToMouse.magnitude <= 1)
+        if (IsAlive) 
+        {
+            if (!HasStarted) 
             {
-                if (StartTimer.IsRunning())
-                {
-                    StartTimer.IncrementTime(Time.deltaTime);
-                }
-                else
-                {
-                    StartTimer.Start();
-                    CountdownLabel.text = "" + StartCountdown;
-                    Countdown1.Play();
-                }
+                Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                Vector2 distanceToMouse = transform.position - mousePosition;
 
-                if (StartTimer.TimerFinished())
+                if (distanceToMouse.magnitude <= 1)
                 {
-                    StartCountdown--;
-                    CountdownLabel.text = "" + StartCountdown;
-                    if (StartCountdown == 0)
+                    if (StartTimer.IsRunning())
                     {
-                        HasStarted = true;
-                        CountdownLabel.text = "";
-                        Countdown2.Play();
+                        StartTimer.IncrementTime(Time.deltaTime);
                     }
                     else
                     {
+                        StartTimer.Start();
+                        CountdownLabel.text = "" + StartCountdown;
                         Countdown1.Play();
                     }
+
+                    if (StartTimer.TimerFinished())
+                    {
+                        StartCountdown--;
+                        CountdownLabel.text = "" + StartCountdown;
+                        if (StartCountdown == 0)
+                        {
+                            HasStarted = true;
+                            CountdownLabel.text = "";
+                            Countdown2.Play();
+                        }
+                        else
+                        {
+                            Countdown1.Play();
+                        }
+                    }
+                }
+                else 
+                {
+                    StartTimer.Stop();
+                    StartCountdown = 3;
+                    CountdownLabel.text = "";
                 }
             }
-            else 
-            {
-                StartTimer.Stop();
-                StartCountdown = 3;
-                CountdownLabel.text = "";
+            else {
+                ShotTimer.IncrementTime(Time.deltaTime);
+                if (ShotTimer.TimerFinished())
+                {
+                    FireShot();
+                }
+                ChaseMouse();
             }
         }
-        else {
-            ShotTimer.IncrementTime(Time.deltaTime);
-            if (ShotTimer.TimerFinished())
-            {
-                FireShot();
-            }
-            ChaseMouse();
+        else 
+        {
+            // game over
         }
     }
 
@@ -171,5 +184,33 @@ public class Ship : MonoBehaviour
 
         ShipRigidbody.angularVelocity = -rotationCorrection * rotationSpeed;
         ShipRigidbody.velocity = transform.up * movementSpeed;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Planet"))
+        {
+            GetComponent<Animator>().Play("PlayerDestroy");
+            IsAlive = false;
+            ShipRigidbody.angularVelocity = 0;
+            ShipRigidbody.velocity = Vector2.zero;
+        }
+    }
+
+    public void DestroyShip()
+    {
+        Destroy(gameObject);
+    }
+
+    public void PlayExplosionSound() 
+    {
+        AudioSource[] sources = GetComponentsInChildren<AudioSource>();
+        foreach (AudioSource source in sources)
+        {
+            if (source.name.Equals("Explosion"))
+            {
+                source.Play();
+            }
+        }
     }
 }
