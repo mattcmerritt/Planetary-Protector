@@ -150,4 +150,10 @@ public class Planet : MonoBehaviour
     {
         Destroy(gameObject);
     }
+
+    // called by animation when planet is hit
+    public void PlayExplosion()
+    {
+        GetComponentInChildren<AudioSource>().Play();
+    }
 }

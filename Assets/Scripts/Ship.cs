@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Ship : MonoBehaviour
 {
@@ -10,26 +11,107 @@ public class Ship : MonoBehaviour
     public GameObject LaserPrefab;
     private const float MinRotationSpeed = 200f, MaxRotationSpeed = 600f, BaseMovementSpeed = 5f, MaxMovementSpeed = 7.5f;
     private bool IsMoving;
+    
+    // startup information
+    private Timer StartTimer;
+    private bool HasStarted;
+    private int StartCountdown;
+    private TMP_Text CountdownLabel;
+    private AudioSource Countdown1, Countdown2;
+
+    // game state
+    private bool IsAlive;    
 
     private void Start()
     {
         ShotTimer = new Timer(ShotInterval); // fires a shot every INTERVAL
         ShotTimer.Start();
+
+        // Startup
+        StartTimer = new Timer(1);
+        HasStarted = false;
+        StartCountdown = 3;
+
+        // initial game state
+        IsAlive = true;
     }
 
     private void Update()
     {
-        ShotTimer.IncrementTime(Time.deltaTime);
-        if (ShotTimer.TimerFinished())
+        if (IsAlive) 
         {
-            FireShot();
+            if (!HasStarted) 
+            {
+                Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                Vector2 distanceToMouse = transform.position - mousePosition;
+
+                if (distanceToMouse.magnitude <= 1)
+                {
+                    if (StartTimer.IsRunning())
+                    {
+                        StartTimer.IncrementTime(Time.deltaTime);
+                    }
+                    else
+                    {
+                        StartTimer.Start();
+                        CountdownLabel.text = "" + StartCountdown;
+                        Countdown1.Play();
+                    }
+
+                    if (StartTimer.TimerFinished())
+                    {
+                        StartCountdown--;
+                        CountdownLabel.text = "" + StartCountdown;
+                        if (StartCountdown == 0)
+                        {
+                            HasStarted = true;
+                            CountdownLabel.text = "";
+                            Countdown2.Play();
+                        }
+                        else
+                        {
+                            Countdown1.Play();
+                        }
+                    }
+                }
+                else 
+                {
+                    StartTimer.Stop();
+                    StartCountdown = 3;
+                    CountdownLabel.text = "";
+                }
+            }
+            else {
+                ShotTimer.IncrementTime(Time.deltaTime);
+                if (ShotTimer.TimerFinished())
+                {
+                    FireShot();
+                }
+                ChaseMouse();
+            }
         }
-        ChaseMouse();
+        else 
+        {
+            // game over
+        }
     }
 
     private void Awake()
     {
         ShipRigidbody = GetComponent<Rigidbody2D>();
+        CountdownLabel = GetComponentInChildren<TMP_Text>();
+        AudioSource[] sources = GetComponentsInChildren<AudioSource>();
+        for (int i = 0; i < sources.Length; i++)
+        {
+            if (sources[i].gameObject.name.Contains("1"))
+            {
+                Countdown1 = sources[i];
+            }
+            else if (sources[i].gameObject.name.Contains("2"))
+            {
+                Countdown2 = sources[i];
+            }
+        }
     }
 
     public void FireShot() 
@@ -60,6 +142,8 @@ public class Ship : MonoBehaviour
         Vector2 distanceToMouse = transform.position - mousePosition;
         float movementSpeed, rotationSpeed;
 
+        /*
+        // old, complex movement code
         // if mouse close to ship, stop moving and start adjusting angle quickly. This will stop the ship until the user moves the mouse far away again
         if (distanceToMouse.magnitude < 1f) 
         {
@@ -92,8 +176,41 @@ public class Ship : MonoBehaviour
                 }
             }
         }
+        */
+
+        // comment these two lines to revert to old movement
+        movementSpeed = Mathf.Clamp(BaseMovementSpeed * distanceToMouse.magnitude, -MaxMovementSpeed, MaxMovementSpeed);
+        rotationSpeed = MinRotationSpeed;
 
         ShipRigidbody.angularVelocity = -rotationCorrection * rotationSpeed;
         ShipRigidbody.velocity = transform.up * movementSpeed;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Planet"))
+        {
+            GetComponent<Animator>().Play("PlayerDestroy");
+            IsAlive = false;
+            ShipRigidbody.angularVelocity = 0;
+            ShipRigidbody.velocity = Vector2.zero;
+        }
+    }
+
+    public void DestroyShip()
+    {
+        Destroy(gameObject);
+    }
+
+    public void PlayExplosionSound() 
+    {
+        AudioSource[] sources = GetComponentsInChildren<AudioSource>();
+        foreach (AudioSource source in sources)
+        {
+            if (source.name.Equals("Explosion"))
+            {
+                source.Play();
+            }
+        }
     }
 }

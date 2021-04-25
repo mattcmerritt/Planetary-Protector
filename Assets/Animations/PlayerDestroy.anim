@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: PlanetDestroy
+  m_Name: PlayerDestroy
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -20,21 +20,21 @@ AnimationClip:
   m_PPtrCurves:
   - curve:
     - time: 0
-      value: {fileID: 21300000, guid: 54c1c24cddaeb8f49a464e1a48343a03, type: 3}
-    - time: 0.18333334
-      value: {fileID: 2865980225765974494, guid: cd66d9b20b3d53c4da08ffe4f397ce5f,
+      value: {fileID: 21300000, guid: abe5c18eb48880140ba57b943203c395, type: 3}
+    - time: 0.083333336
+      value: {fileID: -2199265431620792527, guid: bd05daf9fe486f84bba90e874e04a8fd,
         type: 3}
-    - time: 0.28333333
-      value: {fileID: -4486224392906027496, guid: cd66d9b20b3d53c4da08ffe4f397ce5f,
+    - time: 0.16666667
+      value: {fileID: -2311621756600762058, guid: bd05daf9fe486f84bba90e874e04a8fd,
         type: 3}
-    - time: 0.4
-      value: {fileID: -6881135702216622590, guid: cd66d9b20b3d53c4da08ffe4f397ce5f,
+    - time: 0.3
+      value: {fileID: 4384972397753336262, guid: bd05daf9fe486f84bba90e874e04a8fd,
+        type: 3}
+    - time: 0.41666666
+      value: {fileID: 2952851373507684904, guid: bd05daf9fe486f84bba90e874e04a8fd,
         type: 3}
     - time: 0.5
-      value: {fileID: 5697080528872751824, guid: cd66d9b20b3d53c4da08ffe4f397ce5f,
-        type: 3}
-    - time: 0.6666667
-      value: {fileID: 5697080528872751824, guid: cd66d9b20b3d53c4da08ffe4f397ce5f,
+      value: {fileID: 2952851373507684904, guid: bd05daf9fe486f84bba90e874e04a8fd,
         type: 3}
     attribute: m_Sprite
     path: 
@@ -55,18 +55,18 @@ AnimationClip:
       customType: 23
       isPPtrCurve: 1
     pptrCurveMapping:
-    - {fileID: 21300000, guid: 54c1c24cddaeb8f49a464e1a48343a03, type: 3}
-    - {fileID: 2865980225765974494, guid: cd66d9b20b3d53c4da08ffe4f397ce5f, type: 3}
-    - {fileID: -4486224392906027496, guid: cd66d9b20b3d53c4da08ffe4f397ce5f, type: 3}
-    - {fileID: -6881135702216622590, guid: cd66d9b20b3d53c4da08ffe4f397ce5f, type: 3}
-    - {fileID: 5697080528872751824, guid: cd66d9b20b3d53c4da08ffe4f397ce5f, type: 3}
-    - {fileID: 5697080528872751824, guid: cd66d9b20b3d53c4da08ffe4f397ce5f, type: 3}
+    - {fileID: 21300000, guid: abe5c18eb48880140ba57b943203c395, type: 3}
+    - {fileID: -2199265431620792527, guid: bd05daf9fe486f84bba90e874e04a8fd, type: 3}
+    - {fileID: -2311621756600762058, guid: bd05daf9fe486f84bba90e874e04a8fd, type: 3}
+    - {fileID: 4384972397753336262, guid: bd05daf9fe486f84bba90e874e04a8fd, type: 3}
+    - {fileID: 2952851373507684904, guid: bd05daf9fe486f84bba90e874e04a8fd, type: 3}
+    - {fileID: 2952851373507684904, guid: bd05daf9fe486f84bba90e874e04a8fd, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.68333334
+    m_StopTime: 0.51666665
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -86,15 +86,15 @@ AnimationClip:
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
   m_Events:
-  - time: 0.18333334
-    functionName: PlayExplosion
+  - time: 0.033333335
+    functionName: PlayExplosionSound
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.65
-    functionName: DestroyPlanet
+  - time: 0.48333332
+    functionName: DestroyShip
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
