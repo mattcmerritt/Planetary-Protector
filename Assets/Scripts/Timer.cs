@@ -44,4 +44,16 @@ public class Timer
         }
     }
 
+    public bool IsRunning()
+    {
+        return IsActive;
+    }
+
+    public void Stop()
+    {
+        ElapsedTime = 0;
+        TimerUp = false;
+        IsActive = false;
+    }
+
 }
