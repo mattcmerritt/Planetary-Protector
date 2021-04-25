@@ -129,6 +129,8 @@ public class Ship : MonoBehaviour
         Vector2 distanceToMouse = transform.position - mousePosition;
         float movementSpeed, rotationSpeed;
 
+        /*
+        // old, complex movement code
         // if mouse close to ship, stop moving and start adjusting angle quickly. This will stop the ship until the user moves the mouse far away again
         if (distanceToMouse.magnitude < 1f) 
         {
@@ -161,6 +163,11 @@ public class Ship : MonoBehaviour
                 }
             }
         }
+        */
+
+        // comment these two lines to revert to old movement
+        movementSpeed = Mathf.Clamp(BaseMovementSpeed * distanceToMouse.magnitude, -MaxMovementSpeed, MaxMovementSpeed);
+        rotationSpeed = MinRotationSpeed;
 
         ShipRigidbody.angularVelocity = -rotationCorrection * rotationSpeed;
         ShipRigidbody.velocity = transform.up * movementSpeed;
