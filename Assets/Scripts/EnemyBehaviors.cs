@@ -14,10 +14,12 @@ public class EnemyBehaviors : MonoBehaviour
     public float MovementSpeed;
     private const float Tolerance = 0.05f;
     public GameObject ProjectilePrefab;
+    private Animator EnemyAnimator;
 
     private void Awake()
     {
         EnemyRigidbody = GetComponent<Rigidbody2D>();
+        EnemyAnimator = GetComponent<Animator>();
     }
 
     private void Start()
@@ -88,16 +90,15 @@ public class EnemyBehaviors : MonoBehaviour
         EnemyRigidbody.angularVelocity = 0;
     }
 
-    // the trigger is the laser, so die on hit
+    // the trigger is the laser, so play the death animation on hit using the animator boolean
     private void OnTriggerEnter2D (Collider2D collision)
     {
-        EnemyDie();
+        EnemyAnimator.SetBool("Hit", true);
     }
 
-    // Destroy the enemy and play an animation
+    // Destroy the enemy, triggered by the animation
     public void EnemyDie()
     {
-        // todo animation
         Destroy(gameObject);
     }
 
