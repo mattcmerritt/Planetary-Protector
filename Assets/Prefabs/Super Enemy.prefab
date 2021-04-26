@@ -14,8 +14,8 @@ GameObject:
   - component: {fileID: 3583817650661162193}
   - component: {fileID: 3583817650661162192}
   m_Layer: 0
-  m_Name: Ranged Enemy
-  m_TagString: Untagged
+  m_Name: Super Enemy
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

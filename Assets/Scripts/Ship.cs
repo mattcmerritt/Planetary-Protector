@@ -189,7 +189,7 @@ public class Ship : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Planet"))
+        if (collision.gameObject.CompareTag("Planet") || collision.gameObject.CompareTag("Projectile") || collision.gameObject.CompareTag("Enemy"))
         {
             GetComponent<Animator>().Play("PlayerDestroy");
             IsAlive = false;
