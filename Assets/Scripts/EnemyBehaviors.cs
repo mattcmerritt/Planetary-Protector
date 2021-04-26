@@ -16,10 +16,14 @@ public class EnemyBehaviors : MonoBehaviour
     public GameObject ProjectilePrefab;
     private Animator EnemyAnimator;
 
+    // Ship
+    private Ship Ship;
+
     private void Awake()
     {
         EnemyRigidbody = GetComponent<Rigidbody2D>();
         EnemyAnimator = GetComponent<Animator>();
+        Ship = FindObjectOfType<Ship>();
     }
 
     private void Start()
@@ -29,57 +33,59 @@ public class EnemyBehaviors : MonoBehaviour
         OngoingMove = false;
     }
 
-    private void Update()
-    {
-        ActionTimer.IncrementTime(Time.deltaTime);
-
-        bool TimerFinished = ActionTimer.TimerFinished();
-
-        if (TimerFinished)
+    private void Update() {
+        if (Ship.HasStarted)
         {
-            // Normal enemy: reposition
-            if(EnemyType == 0)
-            {
-                Reposition();
-            }
-            // Ranged enemy: reposition and fire projectile
-            else if(EnemyType == 1)
-            {
-                Reposition();
-            }
-            // Melee enemy: follow player
-            else if(EnemyType == 2)
-            {
-                FollowPlayer();
-            }
-            // Super enemy: follow player (technically move to old position) and fire projectile
-            else if(EnemyType == 3)
-            {
-                FollowPlayer();
-            }
-        }
+            ActionTimer.IncrementTime(Time.deltaTime);
 
-        // if the target has been reached, stop trying to reach it
-        // this makes the ship move forward until next move instead of flipping in place
-        if (Mathf.Abs(transform.position.x - MoveTarget.x) < Tolerance && Mathf.Abs(transform.position.y - MoveTarget.y) < Tolerance)
-        {
-            OngoingMove = false;
-        }
+            bool TimerFinished = ActionTimer.TimerFinished();
 
-        // face the target, and then move to the target
-        if (OngoingMove)
-        {
-            float theta = 360 - Mathf.Atan2(MoveTarget.x - transform.position.x, MoveTarget.y - transform.position.y) * 180 / Mathf.PI;
-            theta = (theta + 360) % 360;
-            transform.eulerAngles = new Vector3(0f, 0f, theta);
-            EnemyRigidbody.velocity = transform.up * MovementSpeed;
-            EnemyRigidbody.angularVelocity = 0;
-        }
-
-        if (TimerFinished) {
-            if(EnemyType == 1 || EnemyType == 3)
+            if (TimerFinished)
             {
-                FireProjectile();
+                // Normal enemy: reposition
+                if(EnemyType == 0)
+                {
+                    Reposition();
+                }
+                // Ranged enemy: reposition and fire projectile
+                else if(EnemyType == 1)
+                {
+                    Reposition();
+                }
+                // Melee enemy: follow player
+                else if(EnemyType == 2)
+                {
+                    FollowPlayer();
+                }
+                // Super enemy: follow player (technically move to old position) and fire projectile
+                else if(EnemyType == 3)
+                {
+                    FollowPlayer();
+                }
+            }
+
+            // if the target has been reached, stop trying to reach it
+            // this makes the ship move forward until next move instead of flipping in place
+            if (Mathf.Abs(transform.position.x - MoveTarget.x) < Tolerance && Mathf.Abs(transform.position.y - MoveTarget.y) < Tolerance)
+            {
+                OngoingMove = false;
+            }
+
+            // face the target, and then move to the target
+            if (OngoingMove)
+            {
+                float theta = 360 - Mathf.Atan2(MoveTarget.x - transform.position.x, MoveTarget.y - transform.position.y) * 180 / Mathf.PI;
+                theta = (theta + 360) % 360;
+                transform.eulerAngles = new Vector3(0f, 0f, theta);
+                EnemyRigidbody.velocity = transform.up * MovementSpeed;
+                EnemyRigidbody.angularVelocity = 0;
+            }
+
+            if (TimerFinished) {
+                if(EnemyType == 1 || EnemyType == 3)
+                {
+                    FireProjectile();
+                }
             }
         }
     }
