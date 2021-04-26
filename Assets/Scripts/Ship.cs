@@ -15,7 +15,7 @@ public class Ship : MonoBehaviour
     
     // startup information
     private Timer StartTimer;
-    private bool HasStarted;
+    public bool HasStarted;
     private int StartCountdown;
     private TMP_Text CountdownLabel;
     private AudioSource Countdown1, Countdown2;
