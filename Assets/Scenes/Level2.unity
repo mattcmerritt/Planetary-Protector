@@ -188,6 +188,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ranged Enemy (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 6030263051212782748, guid: ec8aa1f7857b0744f92e6390e567c0bb,
+        type: 3}
+      propertyPath: PlayerTransform
+      value: 
+      objectReference: {fileID: 849789757}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ec8aa1f7857b0744f92e6390e567c0bb, type: 3}
 --- !u!1 &849789754
@@ -627,6 +632,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3588783381597453646, guid: 054fd32684cfce94b87311e3b2ef6f31,
+        type: 3}
+      propertyPath: PlayerTransform
+      value: 
+      objectReference: {fileID: 849789757}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 054fd32684cfce94b87311e3b2ef6f31, type: 3}
 --- !u!1001 &1511040021
@@ -770,6 +780,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3588783381597453646, guid: 054fd32684cfce94b87311e3b2ef6f31,
+        type: 3}
+      propertyPath: PlayerTransform
+      value: 
+      objectReference: {fileID: 849789757}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 054fd32684cfce94b87311e3b2ef6f31, type: 3}
 --- !u!1 &1546178939
@@ -938,6 +953,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ranged Enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 6030263051212782748, guid: ec8aa1f7857b0744f92e6390e567c0bb,
+        type: 3}
+      propertyPath: PlayerTransform
+      value: 
+      objectReference: {fileID: 849789757}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ec8aa1f7857b0744f92e6390e567c0bb, type: 3}
 --- !u!1 &1691351483
@@ -1532,5 +1552,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3588783381597453646, guid: 054fd32684cfce94b87311e3b2ef6f31,
+        type: 3}
+      propertyPath: PlayerTransform
+      value: 
+      objectReference: {fileID: 849789757}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 054fd32684cfce94b87311e3b2ef6f31, type: 3}
