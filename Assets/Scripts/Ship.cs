@@ -90,6 +90,13 @@ public class Ship : MonoBehaviour
                 }
                 ChaseMouse();
             }
+
+            // check bounds
+            if ((transform.position - Vector3.zero).magnitude > 10f)
+            {
+                Debug.Log("You have gone too far.");
+                DestroyShip();
+            }
         }
         else 
         {
