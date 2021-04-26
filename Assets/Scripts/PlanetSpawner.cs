@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class PlanetSpawner : MonoBehaviour
 {
+    // Planet spawning parameters
     public GameObject PlanetPrefab;
     public int NumPlanets;
-    public bool isRandom;
+    public bool isRandom; // Is random generation being used, or fixed-location generation?
 
+    // Pick which planet spawning method is being used, and spawn the planets
+    // In reality, all of the levels used fixed-location generation, but random still technically works and is supported.
     private void Start()
     {
         if (isRandom)
@@ -21,6 +24,7 @@ public class PlanetSpawner : MonoBehaviour
 
     }
 
+    // Randomly instantiate and reposition a total of numPlanets planets.
     public void RandomStart()
     {
         for (int i = 0; i < NumPlanets; i++)
@@ -31,6 +35,7 @@ public class PlanetSpawner : MonoBehaviour
         }
     }
 
+    // Procedurally instantiate and reposition a total of numPlanets equidistant planets.
     public void FixedStart()
     {
         for (int i = 0; i < NumPlanets; i++) {
