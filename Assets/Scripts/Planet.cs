@@ -149,6 +149,7 @@ public class Planet : MonoBehaviour
     public void DestroyPlanet()
     {
         Destroy(gameObject);
+        FindObjectOfType<Ship>().DestroyShip(); // send back to main menu
     }
 
     // called by animation when planet is hit

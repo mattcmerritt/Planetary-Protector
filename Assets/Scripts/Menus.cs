@@ -16,7 +16,7 @@ public class Menus : MonoBehaviour
 
     private void Start()
     {
-        CountdownTimer = new Timer(1);
+        CountdownTimer = new Timer(0.5);
         Countdown = 3;
 
         foreach (TMP_Text textbox in CountdownTextboxes)

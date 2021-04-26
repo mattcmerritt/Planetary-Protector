@@ -10,12 +10,12 @@ public class Ship : MonoBehaviour
     private Timer ShotTimer;
     private Rigidbody2D ShipRigidbody;
     public GameObject LaserPrefab;
-    private const float MinRotationSpeed = 200f, MaxRotationSpeed = 600f, BaseMovementSpeed = 5f, MaxMovementSpeed = 7.5f;
+    private const float MinRotationSpeed = 200f, MaxRotationSpeed = 600f, BaseMovementSpeed = 3f, MaxMovementSpeed = 5f;
     private bool IsMoving;
     
     // startup information
     private Timer StartTimer;
-    private bool HasStarted;
+    public bool HasStarted;
     private int StartCountdown;
     private TMP_Text CountdownLabel;
     private AudioSource Countdown1, Countdown2;
@@ -89,6 +89,19 @@ public class Ship : MonoBehaviour
                     FireShot();
                 }
                 ChaseMouse();
+            }
+
+            // check bounds
+            if ((transform.position - Vector3.zero).magnitude > 10f)
+            {
+                Debug.Log("You have gone too far.");
+                DestroyShip(); // returns to main menu
+            }
+
+            if (FindObjectsOfType<EnemyBehaviors>().Length == 0)
+            {
+                Debug.Log("You won");
+                DestroyShip(); // returns to main menu
             }
         }
         else 
