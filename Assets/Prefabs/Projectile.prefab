@@ -134,4 +134,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ProjectileRigidbody: {fileID: 658196332865204367}
-  MovementSpeed: 10
+  MovementSpeed: 5
