@@ -230,6 +230,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LaserPrefab: {fileID: 1236170085418934401, guid: 40ab40413a541294282f71129c05ead8,
     type: 3}
+  HasStarted: 0
 --- !u!212 &849789756
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -415,7 +416,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 9957d4e620adf8c47a171503f40c1bd2, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -1135,7 +1136,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 964aeeba3e565a64cb72b08f7a6b124a, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
