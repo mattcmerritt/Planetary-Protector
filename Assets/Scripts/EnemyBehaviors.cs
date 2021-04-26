@@ -5,14 +5,15 @@ using UnityEngine;
 public class EnemyBehaviors : MonoBehaviour
 {
     private Timer ActionTimer;
-    public double ActionInterval; // 1 for normal, 1 for ranged, 0.1 for melee, 3 for ufo
+    public double ActionInterval; // 1 for normal, 1 for ranged, 0.1 for melee, 1 for ufo
     public int EnemyType; // 0 for normal, 1 for ranged, 2 for melee, 3 for ufo
-    public Transform PlayerTransform;
+    public Transform PlayerTransform, CannonTransform;
     public Rigidbody2D EnemyRigidbody;
     public bool OngoingMove;
     public Vector2 MoveTarget;
     public float MovementSpeed;
     private const float Tolerance = 0.05f;
+    public GameObject ProjectilePrefab;
 
     private void Awake()
     {
@@ -30,7 +31,9 @@ public class EnemyBehaviors : MonoBehaviour
     {
         ActionTimer.IncrementTime(Time.deltaTime);
 
-        if (ActionTimer.TimerFinished())
+        bool TimerFinished = ActionTimer.TimerFinished();
+
+        if (TimerFinished)
         {
             // Normal enemy: reposition
             if(EnemyType == 0)
@@ -41,33 +44,41 @@ public class EnemyBehaviors : MonoBehaviour
             else if(EnemyType == 1)
             {
                 Reposition();
-                FireProjectile();
             }
             // Melee enemy: follow player
             else if(EnemyType == 2)
             {
                 FollowPlayer();
             }
-            // Melee enemy: orbit planets
+            // Melee enemy: follow player (technically move to old position) and fire projectile
             else if(EnemyType == 3)
             {
-                OrbitPlanets();
+                FollowPlayer();
             }
         }
 
+        // if the target has been reached, stop trying to reach it
+        // this makes the ship move forward until next move instead of flipping in place
         if (Mathf.Abs(transform.position.x - MoveTarget.x) < Tolerance && Mathf.Abs(transform.position.y - MoveTarget.y) < Tolerance)
         {
             OngoingMove = false;
         }
 
+        // face the target, and then move to the target
         if (OngoingMove)
         {
-            // face the target, and then move to the target
             float theta = 360 - Mathf.Atan2(MoveTarget.x - transform.position.x, MoveTarget.y - transform.position.y) * 180 / Mathf.PI;
             theta = (theta + 360) % 360;
             transform.eulerAngles = new Vector3(0f, 0f, theta);
             EnemyRigidbody.velocity = transform.up * MovementSpeed;
             EnemyRigidbody.angularVelocity = 0;
+        }
+
+        if (TimerFinished) {
+            if(EnemyType == 1 || EnemyType == 3)
+            {
+                FireProjectile();
+            }
         }
     }
 
@@ -111,7 +122,8 @@ public class EnemyBehaviors : MonoBehaviour
     // Shoot a projectile at the player's current position
     public void FireProjectile()
     {
-        // todo Instantiate() projectile prefab and send it toward player
+        GameObject projectile = Instantiate(ProjectilePrefab, CannonTransform.position, Quaternion.identity);
+        projectile.GetComponent<Projectile>().SetTarget(MoveTarget.x, MoveTarget.y);
     }
 
     public void FollowPlayer()
@@ -119,11 +131,6 @@ public class EnemyBehaviors : MonoBehaviour
         OngoingMove = true;
         MoveTarget = new Vector2(PlayerTransform.position.x, PlayerTransform.position.y);
         CheckMoveTargetOnScreen();
-    }
-
-    public void OrbitPlanets()
-    {
-        // todo
     }
 
     public void CheckMoveTargetOnScreen()
