@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class Ship : MonoBehaviour
 {
@@ -188,7 +189,7 @@ public class Ship : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Planet"))
+        if (collision.gameObject.CompareTag("Planet") || collision.gameObject.CompareTag("Projectile") || collision.gameObject.CompareTag("Enemy"))
         {
             GetComponent<Animator>().Play("PlayerDestroy");
             IsAlive = false;
@@ -199,7 +200,8 @@ public class Ship : MonoBehaviour
 
     public void DestroyShip()
     {
-        Destroy(gameObject);
+        // Destroy(gameObject);
+        SceneManager.LoadScene(0); // back to level select on death
     }
 
     public void PlayExplosionSound() 
