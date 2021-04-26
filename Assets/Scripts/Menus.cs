@@ -7,13 +7,26 @@ using UnityEngine.SceneManagement;
 
 public class Menus : MonoBehaviour
 {
+    // Each of the planets is a UI image with a world canvas 
+    // that contains a countdown textbox
     public GameObject[] Planets;
-    public int SelectedLevel;
+    
+    // This will be the index of the scene to load, also can be used as an index
+    public int SelectedLevel; 
+
+    // Time data to keep track of how long the planet has been selected
     private Timer CountdownTimer;
     private int Countdown;
+
+    // Beep sounds for countdown
     public AudioSource Countdown1, Countdown2;
+
+    // The textboxes to display the countdown.
+    // This array is parallel to Planets.
     public TMP_Text[] CountdownTextboxes;
 
+    // Create the countdown timer and start the countdown at 3.
+    // Also clears all countdown textboxes.
     private void Start()
     {
         CountdownTimer = new Timer(0.5);
@@ -47,8 +60,10 @@ public class Menus : MonoBehaviour
                     SelectedLevel = i + 1; // need to count level select scene
                 }
             }
+            // else the mouse is not on the current planet
             else {
-                // make sure this was not the selected planet. If it is, deselect
+                // make sure this was not supposed to be the selected planet. 
+                // if it was, deselect and reset countdown.
                 if (i == SelectedLevel - 1)
                 {
                     SelectedLevel = 0;
@@ -64,16 +79,20 @@ public class Menus : MonoBehaviour
 
         }
 
+        // if a planet is selected, check for passage of time
+        // otherwise, reset the countdown and stop the timer
         if (SelectedLevel != 0)
         {
+            // updates the time if it is running
+            // otherwise, starts a timer and countdown
             if (CountdownTimer.IsRunning())
             {
                 CountdownTimer.IncrementTime(Time.deltaTime);
             }
             else
             {
-                // update countdown label
                 /*
+                // old method of updating labels, was excessive
                 TMP_Text[] textboxes = Planets[i].GetComponentsInChildren<TMP_Text>();
                 foreach (TMP_Text textbox in textboxes)
                 {
@@ -83,18 +102,23 @@ public class Menus : MonoBehaviour
                     }
                 }
                 */
+
+                // update countdown label 
                 CountdownTextboxes[SelectedLevel - 1].text = "" + Countdown;
 
                 CountdownTimer.Start();
                 Countdown1.Play();
             }
 
+            // check if a second has passed.
+            // if yes, countdown and update the right textbox to show
+            // also, play a sound based on how much time is left
             if (CountdownTimer.TimerFinished())
             {
                 Countdown--;
 
-                // update countdown label
                 /*
+                // old method of updating labels, was excessive
                 TMP_Text[] textboxes = Planets[i].GetComponentsInChildren<TMP_Text>();
                 foreach (TMP_Text textbox in textboxes)
                 {
@@ -104,6 +128,8 @@ public class Menus : MonoBehaviour
                     }
                 }
                 */
+
+                // update countdown label
                 CountdownTextboxes[SelectedLevel - 1].text = "" + Countdown;
                 
                 if (Countdown == 0)
@@ -119,17 +145,6 @@ public class Menus : MonoBehaviour
         }
         else 
         {
-            // hide countdown label
-            /*
-            TMP_Text[] textboxes = Planets[i].GetComponentsInChildren<TMP_Text>();
-            foreach (TMP_Text textbox in textboxes)
-            {
-                if (textbox.name == "Countdown")
-                {
-                    textbox.text = "";
-                }
-            }
-            */
             // reset countdown
             Countdown = 3;
             CountdownTimer.Stop();
