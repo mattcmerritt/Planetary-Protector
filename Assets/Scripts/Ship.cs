@@ -10,7 +10,7 @@ public class Ship : MonoBehaviour
     private Timer ShotTimer;
     private Rigidbody2D ShipRigidbody;
     public GameObject LaserPrefab;
-    private const float MinRotationSpeed = 200f, MaxRotationSpeed = 600f, BaseMovementSpeed = 5f, MaxMovementSpeed = 7.5f;
+    private const float MinRotationSpeed = 200f, MaxRotationSpeed = 600f, BaseMovementSpeed = 3f, MaxMovementSpeed = 5f;
     private bool IsMoving;
     
     // startup information
@@ -95,7 +95,13 @@ public class Ship : MonoBehaviour
             if ((transform.position - Vector3.zero).magnitude > 10f)
             {
                 Debug.Log("You have gone too far.");
-                DestroyShip();
+                DestroyShip(); // returns to main menu
+            }
+
+            if (FindObjectsOfType<EnemyBehaviors>().Length == 0)
+            {
+                Debug.Log("You won");
+                DestroyShip(); // returns to main menu
             }
         }
         else 
