@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class Ship : MonoBehaviour
 {
-    private const double ShotInterval = 2;
+    private const double ShotInterval = 1.5f;
     private Timer ShotTimer;
     private Rigidbody2D ShipRigidbody;
     public GameObject LaserPrefab;

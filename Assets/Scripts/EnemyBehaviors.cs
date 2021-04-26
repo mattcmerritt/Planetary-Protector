@@ -9,11 +9,12 @@ public class EnemyBehaviors : MonoBehaviour
     public int EnemyType; // 0 for normal, 1 for ranged, 2 for melee, 3 for super
     public Transform PlayerTransform, CannonTransform;
     public Rigidbody2D EnemyRigidbody;
-    public bool OngoingMove;
+    public bool OngoingMove, Dying;
     public Vector2 MoveTarget;
     public float MovementSpeed;
     private const float Tolerance = 0.05f;
     public GameObject ProjectilePrefab;
+    private Animator EnemyAnimator;
 
     // Ship
     private Ship Ship;
@@ -21,6 +22,7 @@ public class EnemyBehaviors : MonoBehaviour
     private void Awake()
     {
         EnemyRigidbody = GetComponent<Rigidbody2D>();
+        EnemyAnimator = GetComponent<Animator>();
         Ship = FindObjectOfType<Ship>();
     }
 
@@ -29,60 +31,64 @@ public class EnemyBehaviors : MonoBehaviour
         ActionTimer = new Timer(ActionInterval);
         ActionTimer.Start();
         OngoingMove = false;
+        Dying = false;
     }
 
     private void Update() {
         if (Ship.HasStarted)
         {
-            ActionTimer.IncrementTime(Time.deltaTime);
-
-            bool TimerFinished = ActionTimer.TimerFinished();
-
-            if (TimerFinished)
+            if(!Dying)
             {
-                // Normal enemy: reposition
-                if(EnemyType == 0)
-                {
-                    Reposition();
-                }
-                // Ranged enemy: reposition and fire projectile
-                else if(EnemyType == 1)
-                {
-                    Reposition();
-                }
-                // Melee enemy: follow player
-                else if(EnemyType == 2)
-                {
-                    FollowPlayer();
-                }
-                // Super enemy: follow player (technically move to old position) and fire projectile
-                else if(EnemyType == 3)
-                {
-                    FollowPlayer();
-                }
-            }
+                ActionTimer.IncrementTime(Time.deltaTime);
 
-            // if the target has been reached, stop trying to reach it
-            // this makes the ship move forward until next move instead of flipping in place
-            if (Mathf.Abs(transform.position.x - MoveTarget.x) < Tolerance && Mathf.Abs(transform.position.y - MoveTarget.y) < Tolerance)
-            {
-                OngoingMove = false;
-            }
+                bool TimerFinished = ActionTimer.TimerFinished();
 
-            // face the target, and then move to the target
-            if (OngoingMove)
-            {
-                float theta = 360 - Mathf.Atan2(MoveTarget.x - transform.position.x, MoveTarget.y - transform.position.y) * 180 / Mathf.PI;
-                theta = (theta + 360) % 360;
-                transform.eulerAngles = new Vector3(0f, 0f, theta);
-                EnemyRigidbody.velocity = transform.up * MovementSpeed;
-                EnemyRigidbody.angularVelocity = 0;
-            }
-
-            if (TimerFinished) {
-                if(EnemyType == 1 || EnemyType == 3)
+                if (TimerFinished)
                 {
-                    FireProjectile();
+                    // Normal enemy: reposition
+                    if(EnemyType == 0)
+                    {
+                        Reposition();
+                    }
+                    // Ranged enemy: reposition and fire projectile
+                    else if(EnemyType == 1)
+                    {
+                        Reposition();
+                    }
+                    // Melee enemy: follow player
+                    else if(EnemyType == 2)
+                    {
+                        FollowPlayer();
+                    }
+                    // Super enemy: follow player (technically move to old position) and fire projectile
+                    else if(EnemyType == 3)
+                    {
+                        FollowPlayer();
+                    }
+                }
+
+                // if the target has been reached, stop trying to reach it
+                // this makes the ship move forward until next move instead of flipping in place
+                if (Mathf.Abs(transform.position.x - MoveTarget.x) < Tolerance && Mathf.Abs(transform.position.y - MoveTarget.y) < Tolerance)
+                {
+                    OngoingMove = false;
+                }
+
+                // face the target, and then move to the target
+                if (OngoingMove)
+                {
+                    float theta = 360 - Mathf.Atan2(MoveTarget.x - transform.position.x, MoveTarget.y - transform.position.y) * 180 / Mathf.PI;
+                    theta = (theta + 360) % 360;
+                    transform.eulerAngles = new Vector3(0f, 0f, theta);
+                    EnemyRigidbody.velocity = transform.up * MovementSpeed;
+                    EnemyRigidbody.angularVelocity = 0;
+                }
+
+                if (TimerFinished) {
+                    if(EnemyType == 1 || EnemyType == 3)
+                    {
+                        FireProjectile();
+                    }
                 }
             }
         }
@@ -94,16 +100,16 @@ public class EnemyBehaviors : MonoBehaviour
         EnemyRigidbody.angularVelocity = 0;
     }
 
-    // the trigger is the laser, so die on hit
+    // the trigger is the laser, so play the death animation on hit using the animator boolean
     private void OnTriggerEnter2D (Collider2D collision)
     {
-        EnemyDie();
+        Dying = true;
+        EnemyAnimator.SetBool("Hit", true);
     }
 
-    // Destroy the enemy and play an animation
+    // Destroy the enemy, triggered by the animation
     public void EnemyDie()
     {
-        // todo animation
         Destroy(gameObject);
     }
 

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3837577377308215418}
   - component: {fileID: 3837577377308215417}
   - component: {fileID: 3837577377308215416}
+  - component: {fileID: 133759052490329702}
   m_Layer: 0
   m_Name: Melee Enemy
   m_TagString: Enemy
@@ -159,6 +160,25 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!95 &133759052490329702
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3837577377308215413}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 1e04c84e256cd3e40b4ef1d482ab1b44, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &4193261706870300426
 GameObject:
   m_ObjectHideFlags: 0

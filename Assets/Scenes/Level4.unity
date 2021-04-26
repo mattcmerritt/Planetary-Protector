@@ -188,6 +188,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ranged Enemy (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 6030263051212782739, guid: ec8aa1f7857b0744f92e6390e567c0bb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6030263051212782748, guid: ec8aa1f7857b0744f92e6390e567c0bb,
         type: 3}
       propertyPath: PlayerTransform
@@ -211,6 +216,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Super Enemy (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3583817650661162205, guid: 29fd8ee0d024ef240a3a0cd64d47a297,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3583817650661162207, guid: 29fd8ee0d024ef240a3a0cd64d47a297,
         type: 3}
@@ -453,6 +463,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Melee Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 3837577377308215413, guid: 8d7c58b674ace554c9cb637796b3517b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3837577377308215415, guid: 8d7c58b674ace554c9cb637796b3517b,
         type: 3}
@@ -800,6 +815,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Normal Enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 3588783381597453633, guid: 054fd32684cfce94b87311e3b2ef6f31,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3588783381597453635, guid: 054fd32684cfce94b87311e3b2ef6f31,
         type: 3}
       propertyPath: m_RootOrder
@@ -1027,6 +1047,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Ranged Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 6030263051212782739, guid: ec8aa1f7857b0744f92e6390e567c0bb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6030263051212782748, guid: ec8aa1f7857b0744f92e6390e567c0bb,
         type: 3}
