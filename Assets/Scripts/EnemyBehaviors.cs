@@ -5,8 +5,8 @@ using UnityEngine;
 public class EnemyBehaviors : MonoBehaviour
 {
     private Timer ActionTimer;
-    public double ActionInterval; // 1 for normal, 1 for ranged, 0.1 for melee, 1 for ufo
-    public int EnemyType; // 0 for normal, 1 for ranged, 2 for melee, 3 for ufo
+    public double ActionInterval; // 1 for normal, 2 for ranged, 0.1 for melee, 1.5 for super
+    public int EnemyType; // 0 for normal, 1 for ranged, 2 for melee, 3 for super
     public Transform PlayerTransform, CannonTransform;
     public Rigidbody2D EnemyRigidbody;
     public bool OngoingMove;
@@ -50,7 +50,7 @@ public class EnemyBehaviors : MonoBehaviour
             {
                 FollowPlayer();
             }
-            // Melee enemy: follow player (technically move to old position) and fire projectile
+            // Super enemy: follow player (technically move to old position) and fire projectile
             else if(EnemyType == 3)
             {
                 FollowPlayer();
@@ -126,6 +126,7 @@ public class EnemyBehaviors : MonoBehaviour
         projectile.GetComponent<Projectile>().SetTarget(MoveTarget.x, MoveTarget.y);
     }
 
+    // move to the player's current position
     public void FollowPlayer()
     {
         OngoingMove = true;
@@ -133,6 +134,8 @@ public class EnemyBehaviors : MonoBehaviour
         CheckMoveTargetOnScreen();
     }
 
+    // make sure that the intended movement point is on screen
+    // if a coordinate is off screen, replace with 0
     public void CheckMoveTargetOnScreen()
     {
         if (Mathf.Abs(MoveTarget.x) > 8)
