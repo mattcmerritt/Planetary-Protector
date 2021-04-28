@@ -104,14 +104,14 @@ public class Ship : MonoBehaviour
             if ((transform.position - Vector3.zero).magnitude > 10f)
             {
                 Debug.Log("You have gone too far.");
-                DestroyShip(); // returns to main menu
+                DestroyShip(); // to loss screen
             }
 
             // check to see if all enemies have been defeated
             if (FindObjectsOfType<EnemyBehaviors>().Length == 0)
             {
                 Debug.Log("You won");
-                DestroyShip(); // returns to main menu
+                SceneManager.LoadScene(5); // to win screen
             }
         }
         else 
@@ -231,7 +231,7 @@ public class Ship : MonoBehaviour
     public void DestroyShip()
     {
         // Destroy(gameObject); // adding line back this will cause issues with enemies
-        SceneManager.LoadScene(0); // back to level select on death
+        SceneManager.LoadScene(6); // to lose screen on death
     }
 
     // finds and plays the explosion sound
