@@ -13,7 +13,7 @@ public class Ship : MonoBehaviour
 
     // Ship info
     private Rigidbody2D ShipRigidbody;
-    private const float MinRotationSpeed = 200f, MaxRotationSpeed = 600f, BaseMovementSpeed = 3f, MaxMovementSpeed = 5f;
+    private const float MinRotationSpeed = 300f, MaxRotationSpeed = 600f, BaseMovementSpeed = 3f, MaxMovementSpeed = 5f;
     private bool IsMoving;
     
     // startup information
