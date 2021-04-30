@@ -2406,6 +2406,8 @@ MonoBehaviour:
   SelectedLevel: 0
   Countdown1: {fileID: 1479690285}
   Countdown2: {fileID: 1001471658}
+  Countdown1Sound: {fileID: 8300000, guid: 964aeeba3e565a64cb72b08f7a6b124a, type: 3}
+  Countdown2Sound: {fileID: 8300000, guid: 9957d4e620adf8c47a171503f40c1bd2, type: 3}
   CountdownTextboxes:
   - {fileID: 503766286}
   - {fileID: 1237860666}
