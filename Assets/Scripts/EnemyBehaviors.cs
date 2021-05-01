@@ -17,6 +17,9 @@ public class EnemyBehaviors : MonoBehaviour
     public Vector2 MoveTarget; // the coordinates the enemy is trying to move to
     public float MovementSpeed; // how fast the ship moves; 2 for normal, 2 for ranged, 1.5 for melee, 2 for super
     private const float Tolerance = 0.05f; // since coordinates are floats, tolerance is used to approximate "close enough" for reaching destinations
+    // audio components
+    public AudioSource Explosion;
+    public AudioClip DeathSound;
     
     // References to other objects the enemy uses
     public GameObject ProjectilePrefab; // the projectile
@@ -106,6 +109,7 @@ public class EnemyBehaviors : MonoBehaviour
     private void OnTriggerEnter2D (Collider2D collision)
     {
         Dying = true;
+        Explosion.PlayOneShot(DeathSound);
         EnemyAnimator.SetBool("Hit", true);
     }
 
