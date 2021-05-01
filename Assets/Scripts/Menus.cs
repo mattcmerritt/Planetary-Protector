@@ -20,6 +20,7 @@ public class Menus : MonoBehaviour
 
     // Beep sounds for countdown
     public AudioSource Countdown1, Countdown2;
+    public AudioClip Countdown1Sound, Countdown2Sound;
 
     // The textboxes to display the countdown.
     // This array is parallel to Planets.
@@ -107,7 +108,7 @@ public class Menus : MonoBehaviour
                 CountdownTextboxes[SelectedLevel - 1].text = "" + Countdown;
 
                 CountdownTimer.Start();
-                Countdown1.Play();
+                Countdown1.PlayOneShot(Countdown1Sound);
             }
 
             // check if a second has passed.
@@ -134,12 +135,12 @@ public class Menus : MonoBehaviour
                 
                 if (Countdown == 0)
                 {
-                    Countdown2.Play();
+                    Countdown2.PlayOneShot(Countdown2Sound);
                     SceneManager.LoadScene(SelectedLevel);
                 }
                 else
                 {
-                    Countdown1.Play();
+                    Countdown1.PlayOneShot(Countdown1Sound);
                 }
             }
         }
